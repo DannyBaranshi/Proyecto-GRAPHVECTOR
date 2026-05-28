@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suma de Vectores R2</title>
+
+    <!-- Bootstrap Darkly -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        :root {
+            --color-accent: #17a2b8;
+            --color-panel: rgba(0, 0, 0, 0.466);
+            --color-text: #fff;
+            --color-muted: #bbb;
+            --color-input: #444;
+            --color-border: #ccc;
+            --color-shadow: rgba(255, 255, 255, 0.685);
+        }
+
+        body {
+            background: url('https://wallpapers.com/images/hd/dark-elegant-pattern-y67f2aqpg0m7abe1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            color: #fff;
+        }
+
+        h1, h3, h5 {
+            text-shadow: none;
+            color: #fff;
+        }
+
+        .fondo-opaco {
+            background: rgba(0, 0, 0, 0.466);
+            border-radius: 18px;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 8px 32px rgba(255,255,255,0.685);
+            padding: 25px;
+        }
+
+        .panel-teoria {
+            background: rgba(0, 0, 0, 0.466);
+            border-radius: 18px;
+            padding: 25px;
+            height: 100%;
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(255,255,255,0.685);
+            border-left: none;
+        }
+
+        .panel-teoria h3 {
+            margin-bottom: 15px;
+            color: #17a2b8;
+        }
+
+        .theory-box {
+            background: rgba(34, 34, 34, 0.7);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+        }
+
+        label, p, b {
+            color: #fff !important;
+        }
+
+        .form-control {
+            background: var(--color-input) !important;
+            border: 1px solid var(--color-border) !important;
+            color: #fff !important;
+            border-radius: 10px;
+        }
+
+        .form-control:focus {
+            background: var(--color-input) !important;
+            color: #fff !important;
+            border-color: var(--color-accent) !important;
+            box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25) !important;
+        }
+
+        .btn-primary {
+            background-color: #17a2b8 !important;
+            border-color: #17a2b8 !important;
+            color: #fff !important;
+            border-radius: 10px;
+            padding: 0.65rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background-color: #138496 !important;
+            border-color: #138496 !important;
+        }
+
+        .img-fluid {
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            background: transparent;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+            max-height: 420px;
+        }
+
+        .fa-plus {
+            color: #17a2b8 !important;
+        }
+
+        @media (max-width: 767.98px) {
+            .panel-teoria {
+                margin-top: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container-fluid mt-4 mb-4">
+    <div class="row">
+
+        <div class="col-md-7 mb-4 mb-md-0">
+            <div class="fondo-opaco">
+                <h1 class="text-center mb-4">Suma de Vectores en R2 (A + B)</h1>
+
+                <form method="post" class="mb-4">
+                    {% csrf_token %}
+                    
+                    <div class="form-row justify-content-center mb-3">
+                        <div class="form-group col-4">
+                            <label>X1 (A):</label>
+                            <input type="number" name="x1" class="form-control" required>
+                        </div>
+
+                        <div class="col-1 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-plus fa-2x text-info"></i>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label>X2 (B):</label>
+                            <input type="number" name="x2" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-4">
+                            <label>Y1 (A):</label>
+                            <input type="number" name="y1" class="form-control" required>
+                        </div>
+
+                        <div class="col-1 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-plus fa-2x text-info"></i>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label>Y2 (B):</label>
+                            <input type="number" name="y2" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-4">
+                        <button class="btn btn-primary px-4">Graficar Suma</button>
+                    </div>
+                </form>
+
+                {% if imagen %}
+                    <div class="text-center">
+                        <img src="data:image/png;base64,{{ imagen }}" class="img-fluid" alt="Gráfico de suma de vectores">
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="panel-teoria">
+
+                <h3>📘 Suma de Vectores en R₂</h3>
+
+                <p>
+                    La suma de vectores es una operación fundamental del álgebra vectorial.
+                    Dados dos vectores <b>A</b> y <b>B</b>, su suma produce
+                    un nuevo vector llamado <b>vector resultante</b>.
+                </p>
+
+                <div class="theory-box">
+                    <b>Si:</b><br>
+                    \( A = (x_1, y_1) \)<br>
+                    \( B = (x_2, y_2) \)<br><br>
+
+                    Entonces la suma es:<br>
+                    <h5 class="text-info text-center mt-2">\( R = A + B = (x_1 + x_2,\; y_1 + y_2) \)</h5>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

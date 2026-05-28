@@ -1,0 +1,6 @@
+@VECTORGRAPH_HostAddress = http://localhost:5278
+
+GET {{VECTORGRAPH_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graficar Vector</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        :root {
+            --color-accent: #17a2b8;
+            --color-panel: rgba(0, 0, 0, 0.466);
+            --color-input: #444;
+            --color-border: #ccc;
+            --color-text: #fff;
+            --color-muted: #bbb;
+            --color-shadow: rgba(255, 255, 255, 0.685);
+        }
+
+        body {
+            min-height: 100vh;
+            background: url('https://wallpapers.com/images/hd/dark-elegant-pattern-y67f2aqpg0m7abe1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+        }
+
+        .bg-dark-transparent {
+            background: var(--color-panel);
+            border-radius: 18px;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 8px 32px 0 var(--color-shadow);
+            padding: 2rem;
+        }
+
+        h1, p, a, span {
+            color: #fff;
+        }
+
+        .btn {
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-primary,
+        .btn-warning,
+        .btn-danger,
+        .btn-secondary {
+            background-color: var(--color-accent);
+            border-color: var(--color-accent);
+            color: #fff !important;
+        }
+
+        .btn-primary:hover,
+        .btn-warning:hover,
+        .btn-danger:hover,
+        .btn-secondary:hover {
+            background-color: #138496;
+            border-color: #138496;
+            color: #fff !important;
+        }
+
+        .btn:focus {
+            box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.35);
+        }
+
+        .button-group-custom {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .button-group-custom .btn {
+            margin: 0;
+        }
+
+        @media (max-width: 576px) {
+            .button-group-custom {
+                flex-direction: column;
+            }
+
+            .button-group-custom .btn {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 mb-5">
+        <div class="bg-dark-transparent mx-auto" style="max-width: 800px;">
+            <h1 class="mb-4 text-light text-center">Graficar Vector en R2</h1>
+
+            <div class="button-group-custom">
+                <a href="{% url 'prueba_facilR2' %}" class="btn btn-primary">Iniciar Prueba Fácil</a>
+                <a href="{% url 'prueba_operaciones' %}" class="btn btn-warning">Iniciar Prueba Media</a>
+                <a href="{% url 'prueba_magnitud_angulo' %}" class="btn btn-danger">Iniciar Prueba Difícil</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

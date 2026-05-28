@@ -1,0 +1,57 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: vectorgraph_sql
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${SA_PASSWORD}
+      MSSQL_PID: "Express"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+      - ./backups:/backup
+    networks:
+      - app_network
+
+  backend_api:
+    build: ./backend_dotnet
+    container_name: vectorgraph_api
+    depends_on:
+      - sqlserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5278
+      - ConnectionStrings__CadenaSQL=Server=sqlserver;Database=VECTORGRAPH;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+      - Jwt__key=${JWT_KEY}
+    ports:
+      - "5278:5278"
+    networks:
+      - app_network
+    restart: unless-stopped
+
+  frontend_django:
+    build: ./frontend_django
+    container_name: vectorgraph_django
+    depends_on:
+      - backend_api
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DEBUG=False
+      - API_BASE_URL=http://backend_api:5278
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+    ports:
+      - "8000:8000"
+    volumes:
+      - django_static:/app/staticfiles
+    networks:
+      - app_network
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+  django_static:
+
+networks:
+  app_network:
+    driver: bridge

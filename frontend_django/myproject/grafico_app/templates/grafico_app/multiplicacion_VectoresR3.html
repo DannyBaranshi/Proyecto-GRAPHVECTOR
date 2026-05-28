@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplicación de Vectores R3</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            min-height: 100vh;
+            background: url('https://wallpapers.com/images/hd/dark-elegant-pattern-y67f2aqpg0m7abe1.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .bg-dark-blur {
+            background: rgba(0, 0, 0, 0.466);
+            border-radius: 18px;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.685);
+        }
+
+        label, .form-label, .form-control, .btn {
+            color: #fff !important;
+        }
+
+        .form-control {
+            background: #444 !important;
+            border: 1px solid #ccc !important;
+            color: #fff !important;
+            text-align: center;
+        }
+
+        .form-control::placeholder {
+            color: #bbb !important;
+        }
+
+        .btn-primary {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .explanation {
+            height: calc(100vh - 3.5rem);
+            overflow-y: auto;
+            position: sticky;
+            top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(0,0,0,0.466);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.685);
+            color: #fff;
+        }
+
+        .explanation h4 {
+            color: #17a2b8;
+            margin-bottom: 1rem;
+        }
+
+        .math-block {
+            background: #222;
+            padding: 0.75rem;
+            border-radius: 8px;
+            color: #aaffff;
+            margin-bottom: 10px;
+        }
+
+        .vector-title {
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .input-group-icon {
+            font-size: 1.6rem;
+            color: #fff;
+        }
+
+        .results {
+            background: #212529;
+            color: #d1e7dd;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+            margin-top: 1rem;
+        }
+
+        #grafico {
+            width: 100%;
+            height: 550px;
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 991.98px) {
+            #grafico { height: 420px; }
+        }
+
+        @media (max-width: 767.98px) {
+            .form-control { max-width: 100%; min-width: auto; }
+        }
+    </style>
+</head>
+<body class="text-light">
+
+<div class="container-fluid py-5">
+    <div class="row gx-2">
+
+       
+        <div class="col-lg-8 col-md-12">
+            <div class="bg-dark-blur p-4 mb-4">
+
+                <h2 class="text-center mb-4">Multiplicación de Vectores en R³</h2>
+
+                <form id="vectorForm" class="mb-3" autocomplete="off">
+
+                    <div class="row text-center mb-2">
+                        <div class="col-5 vector-title">Vector A</div>
+                        <div class="col-2"></div>
+                        <div class="col-5 vector-title">Vector B</div>
+                    </div>
+
+                    <!-- X -->
+                    <div class="row align-items-center mb-2 gx-1 justify-content-center">
+                        <div class="col-5 d-flex flex-column align-items-center">
+                            <label for="x1" class="form-label">X<sub>A</sub></label>
+                            <input type="number" step="0.1" id="x1" name="x1" class="form-control" placeholder="0" required>
+                        </div>
+                        <div class="col-2 text-center d-flex align-items-end justify-content-center" style="height:56px;">
+                            <span class="input-group-icon"><i class="bi bi-x"></i></span>
+                        </div>
+                        <div class="col-5 d-flex flex-column align-items-center">
+                            <label for="x2" class="form-label">X<sub>B</sub></label>
+                            <input type="number" step="0.1" id="x2" name="x2" class="form-control" placeholder="0" required>
+                        </div>
+                    </div>
+
+                    <!-- Y -->
+                    <div class="row align-items-center mb-2 gx-1 justify-content-center">
+                        <div class="col-5 d-flex flex-column align-items-center">
+                            <label for="y1" class="form-label">Y<sub>A</sub></label>
+                            <input type="number" step="0.1" id="y1" name="y1" class="form-control" placeholder="0" required>
+                        </div>
+                        <div class="col-2 text-center d-flex align-items-end justify-content-center" style="height:56px;">
+                            <span class="input-group-icon"><i class="bi bi-x"></i></span>
+                        </div>
+                        <div class="col-5 d-flex flex-column align-items-center">
+                            <label for="y2" class="form-label">Y<sub>B</sub></label>
+                            <input type="number" step="0.1" id="y2" name="y2" class="form-control" placeholder="0" required>
+                        </div>
+                    </div>
+
+                    <!-- Z -->
+                    <div class="row align-items-center mb-3 gx-1 justify-content-center">
+                        <div class="col-5 d-flex flex-column align-items-center">
+                            <label for="z1" class="form-label">Z<sub>A</sub></label>
+                            <input type="number" step="0.1" id="z1" name="z1" class="form-control" placeholder="0" required>
+                        </div>
+                        <div class="col-2 text-center d-flex align-items-end justify-content-center" style="height:56px;">
+                            <span class="input-group-icon"><i class="bi bi-x"></i></span>
+                        </div>
+                        <div class="col-5 d-flex flex-column align-items-center">
+                            <label for="z2" class="form-label">Z<sub>B</sub></label>
+                            <input type="number" step="0.1" id="z2" name="z2" class="form-control" placeholder="0" required>
+                        </div>
+                    </div>
+
+                    <div class="text-center mb-2">
+                        <button type="submit" class="btn btn-primary px-5">Calcular Productos</button>
+                    </div>
+                </form>
+
+                <div id="resultados" class="results d-none"></div>
+                <div id="grafico" class="d-none bg-dark-blur"></div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12">
+            <div class="explanation">
+
+                <h4>Teoría de Multiplicación en R³</h4>
+
+                <p>Para dos vectores en \( \mathbb{R}^3 \):</p>
+                <div class="math-block">
+                    $$ \vec{A} = (A_x, A_y, A_z) \quad \vec{B} = (B_x, B_y, B_z) $$
+                </div>
+
+                <p><strong>Producto Escalar:</strong></p>
+                <div class="math-block">
+                    $$ \vec{A} \cdot \vec{B} = A_x B_x + A_y B_y + A_z B_z $$
+                </div>
+                <div class="math-block">
+                    $$ \vec{A} \cdot \vec{B} = |\vec{A}||\vec{B}|\cos(\theta) $$
+                </div>
+
+                <p>Si \( \vec{A} \cdot \vec{B} > 0 \) → ángulo agudo. Si \( = 0 \) → perpendiculares. Si \( < 0 \) → ángulo obtuso.</p>
+
+                <p><strong>Producto Vectorial:</strong></p>
+                <div class="math-block">
+                    $$ \vec{A} \times \vec{B} = \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\ A_x & A_y & A_z \\ B_x & B_y & B_z \end{vmatrix} $$
+                </div>
+                <div class="math-block">
+                    $$ = (A_y B_z - A_z B_y,\; A_z B_x - A_x B_z,\; A_x B_y - A_y B_x) $$
+                </div>
+
+                <p>Su magnitud equivale al área del paralelogramo formado por \( \vec{A} \) y \( \vec{B} \):</p>
+                <div class="math-block">
+                    $$ |\vec{A} \times \vec{B}| = |\vec{A}||\vec{B}|\sin(\theta) $$
+                </div>
+
+                <p>Además: \( \vec{A} \times \vec{B} = -(\vec{B} \times \vec{A}) \)</p>
+
+                <hr style="border-color: #444;">
+
+                <p><strong>Leyenda de colores:</strong></p>
+                <p><span style="color:#ff5555;">■</span> Rojo → Vector A</p>
+                <p><span style="color:#4CAF50;">■</span> Verde → Vector B</p>
+                <p><span style="color:#5599ff;">■</span> Azul → Producto vectorial (A×B)</p>
+                <p>Los cubos punteados muestran las proyecciones y componentes de cada vector.</p>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function cuboExtrapolar(x, y, z, color='#fff', width=2) {
+        let v = [
+            [0,0,0], [x,0,0], [x,y,0], [0,y,0],
+            [0,0,z], [x,0,z], [x,y,z], [0,y,z]
+        ];
+        let edges = [
+            [0,1],[1,2],[2,3],[3,0],
+            [4,5],[5,6],[6,7],[7,4],
+            [0,4],[1,5],[2,6],[3,7]
+        ];
+        let traces = [];
+        for (let e of edges) {
+            traces.push({
+                type: 'scatter3d',
+                mode: 'lines',
+                x: [v[e[0]][0], v[e[1]][0]],
+                y: [v[e[0]][1], v[e[1]][1]],
+                z: [v[e[0]][2], v[e[1]][2]],
+                line: { color: color, width: width, dash: 'dot' },
+                showlegend: false
+            });
+        }
+        return traces;
+    }
+
+    function productoEscalar(x1, y1, z1, x2, y2, z2) {
+        return x1 * x2 + y1 * y2 + z1 * z2;
+    }
+
+    function productoVectorial(x1, y1, z1, x2, y2, z2) {
+        return [
+            y1 * z2 - z1 * y2,
+            z1 * x2 - x1 * z2,
+            x1 * y2 - y1 * x2
+        ];
+    }
+
+    function graficarMultiplicacion(x1, y1, z1, x2, y2, z2, escalar, vectorial) {
+        let data = [
+            {
+                type: 'scatter3d', mode: 'lines',
+                x: [0, x1], y: [0, y1], z: [0, z1],
+                line: { color: 'red', width: 6 },
+                name: `A (${x1.toFixed(2)}, ${y1.toFixed(2)}, ${z1.toFixed(2)})`
+            },
+            {
+                type: 'scatter3d', mode: 'lines',
+                x: [0, x2], y: [0, y2], z: [0, z2],
+                line: { color: 'green', width: 6 },
+                name: `B (${x2.toFixed(2)}, ${y2.toFixed(2)}, ${z2.toFixed(2)})`
+            },
+            {
+                type: 'scatter3d', mode: 'lines',
+                x: [0, vectorial[0]], y: [0, vectorial[1]], z: [0, vectorial[2]],
+                line: { color: 'blue', width: 6 },
+                name: `A×B (${vectorial[0].toFixed(2)}, ${vectorial[1].toFixed(2)}, ${vectorial[2].toFixed(2)})`
+            }
+        ];
+
+        data = data
+            .concat(cuboExtrapolar(x1, y1, z1, '#fff', 2))
+            .concat(cuboExtrapolar(x2, y2, z2, '#fff', 2))
+            .concat(cuboExtrapolar(vectorial[0], vectorial[1], vectorial[2], '#fff', 2));
+
+        const valores = [x1, y1, z1, x2, y2, z2, vectorial[0], vectorial[1], vectorial[2]];
+        const min = Math.min(0, ...valores) - 1;
+        const max = Math.max(0, ...valores) + 1;
+
+        const layout = {
+            margin: { l: 0, r: 0, b: 0, t: 30 },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#f8f9fa' },
+            scene: {
+                xaxis: { title: 'X', color: '#fff', range: [min, max] },
+                yaxis: { title: 'Y', color: '#fff', range: [min, max] },
+                zaxis: { title: 'Z', color: '#fff', range: [min, max] },
+                aspectmode: 'cube',
+                camera: { eye: { x: 1.5, y: 1.5, z: 0.8 } }
+            },
+            legend: { x: 0.85, y: 0.95, font: { color: '#f8f9fa' } },
+            title: {
+                text: `Escalar: ${escalar.toFixed(2)} | Vectorial: (${vectorial[0].toFixed(2)}, ${vectorial[1].toFixed(2)}, ${vectorial[2].toFixed(2)})`,
+                x: 0.5, xanchor: 'center',
+                font: { size: 13, color: '#fff' }
+            }
+        };
+
+        Plotly.newPlot('grafico', data, layout, { displayModeBar: false, responsive: true });
+    }
+
+    document.getElementById('vectorForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const x1 = parseFloat(this.x1.value);
+        const y1 = parseFloat(this.y1.value);
+        const z1 = parseFloat(this.z1.value);
+        const x2 = parseFloat(this.x2.value);
+        const y2 = parseFloat(this.y2.value);
+        const z2 = parseFloat(this.z2.value);
+
+        const escalar  = productoEscalar(x1, y1, z1, x2, y2, z2);
+        const vectorial = productoVectorial(x1, y1, z1, x2, y2, z2);
+
+        const resultados = document.getElementById('resultados');
+        resultados.innerHTML = `
+            <strong>Producto Escalar (A·B):</strong> ${escalar.toFixed(2)}<br>
+            <strong>Producto Vectorial (A×B):</strong> (${vectorial[0].toFixed(2)}, ${vectorial[1].toFixed(2)}, ${vectorial[2].toFixed(2)})
+        `;
+        resultados.classList.remove('d-none');
+
+        const grafico = document.getElementById('grafico');
+        grafico.classList.remove('d-none');
+        graficarMultiplicacion(x1, y1, z1, x2, y2, z2, escalar, vectorial);
+    });
+</script>
+
+</body>
+</html>
